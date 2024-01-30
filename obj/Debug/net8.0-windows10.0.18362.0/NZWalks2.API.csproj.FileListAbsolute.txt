@@ -139,3 +139,4 @@ C:\Users\mohammed saif\Desktop\NZWalks\NZWalks2\NZWalks2.API\bin\Debug\net8.0-wi
 C:\Users\mohammed saif\Desktop\NZWalks\NZWalks2\NZWalks2.API\bin\Debug\net8.0-windows10.0.18362.0\Microsoft.Extensions.Identity.Core.dll
 C:\Users\mohammed saif\Desktop\NZWalks\NZWalks2\NZWalks2.API\bin\Debug\net8.0-windows10.0.18362.0\Microsoft.Extensions.Identity.Stores.dll
 C:\Users\mohammed saif\Desktop\NZWalks\NZWalks2\NZWalks2.API\bin\Debug\net8.0-windows10.0.18362.0\Microsoft.Extensions.Options.dll
+C:\Users\mohammed saif\Desktop\NZWalks\NZWalks2\NZWalks2.API\obj\Debug\net8.0-windows10.0.18362.0\NZWalks2.API.sourcelink.json

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NZWalks2.API.Models.DTO;
+using NZWalks2.API.Repository;
 
 namespace NZWalks2.API.Controllers
 {
@@ -10,10 +11,12 @@ namespace NZWalks2.API.Controllers
     public class AuthController : ControllerBase
     {
         private readonly UserManager<IdentityUser> userManager;
+        private readonly ITokenRepository tokenRepository;
 
-        public AuthController(UserManager<IdentityUser> userManager)
+        public AuthController(UserManager<IdentityUser> userManager, ITokenRepository tokenRepository)
         {
             this.userManager = userManager;
+            this.tokenRepository = tokenRepository;
         }
 
         //Post: /api/Auth/Register
@@ -48,6 +51,45 @@ namespace NZWalks2.API.Controllers
 
             return BadRequest("Something went wrong");
 
+
+        }
+
+
+        // Post: /api/Auth/Login
+        [HttpPost]
+        [Route("Login")]
+
+        public async Task<IActionResult> Login([FromBody] LoginRequestDto loginRequestDto)
+        {
+            var user = await userManager.FindByEmailAsync(loginRequestDto.Username);
+
+            if(user != null)
+            {
+               var checkPasswordResult = await userManager.CheckPasswordAsync(user, loginRequestDto.Password);
+
+                if(checkPasswordResult)
+                {
+                    //Get roles for this user
+                  var roles =  await userManager.GetRolesAsync(user);
+
+                    if (roles != null)
+                    {
+                        //Create Token
+
+                      var jwtToken =    tokenRepository.CreateJWTToken(user, roles.ToList());
+
+                        var response = new LoginRequestDto
+                        {
+                            JwtToken = jwtToken
+                        };
+
+                      return Ok(response);
+
+                    }                   
+                }
+            }
+
+            return BadRequest("Username or Password Incorrect");
 
         }
     }
